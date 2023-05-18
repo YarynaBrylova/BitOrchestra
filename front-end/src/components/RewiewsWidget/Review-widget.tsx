@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { FC } from 'react';
+import type { ReviewDataI } from './reviews/Review';
 
 import { ReviewComponent } from './reviews/Review';
 import { ReviewFormComponent } from './review-form/Review-form';
@@ -8,24 +9,24 @@ import { AllReviewsComponent } from './reviews/All-reviews';
 import { ReviewService } from '../../fake-api/reviewsService';
 
 import './Review-widget.scss';
+import { useDispatch, useSelector } from 'react-redux';
+
+interface StateI {
+  reviews: ReviewDataI[]
+}
 
 export const ReviewWidgetComponent: FC = () => {
   const [ isLoading, setIsLoading ] = useState(true);
-  const [ isError, setIsError ] = useState(false);
-  const [ reviewsList, setReviewsList ] = useState([]);
+
+  const dispatch = useDispatch();
+  const reviewsList = useSelector((state: StateI) => state.reviews);
+
+  console.log('rl', reviewsList);
 
   useEffect(() => {
-    ReviewService.getReviewsList()
-      .then(resp => {
-        setReviewsList(resp.data);
-      })
-      .catch(() => {
-        setIsError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [reviewsList]);
+    dispatch(ReviewService.getReviewsList());
+    setIsLoading(false);
+  }, []);
 
   const [lastReview, ...restReviews] = reviewsList;
 
@@ -36,7 +37,6 @@ export const ReviewWidgetComponent: FC = () => {
           <div className="spinner-border" role="status" />
         </div>)
       }
-      { isError && <div className='error-data'>Something went wrong!</div>}
       { lastReview && <ReviewComponent review={lastReview}/> }
       { restReviews.length > 0 && <AllReviewsComponent restReviews={[...restReviews]}/> }
       <ReviewFormComponent/>

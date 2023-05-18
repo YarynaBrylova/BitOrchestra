@@ -22,9 +22,9 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
+    indent: ['error', 2, { SwitchCase: 1 }],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    indent: ['error', 2],
     'no-multi-spaces': ['error'],
     'arrow-body-style': ['error', 'as-needed'],
     'react/self-closing-comp': [
