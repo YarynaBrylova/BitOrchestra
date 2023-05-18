@@ -3,6 +3,8 @@ import React from 'react';
 import type { FC, ChangeEvent } from 'react';
 import type { FormikProps } from 'formik';
 
+import { ReviewService } from '../../../fake-api/reviewsService';
+
 import { TextFieldWrapper, TextareaComponent, InputComponent, CheckboxComponent } from './Review-form-elements';
 
 import { Formik } from 'formik';
@@ -11,7 +13,7 @@ import * as Yup from 'yup';
 import { ReviewForm } from '../../../variables';
 import './Review-form.scss';
 
-interface FormValuesI {
+export interface FormValuesI {
   comment: string
   name: string
   email: string
@@ -51,7 +53,16 @@ export const ReviewFormComponent: FC = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => {console.log(values);}}
+        onSubmit={({comment, name, email, phone,  saving}) => {
+          ReviewService
+            .postReview({
+              comment ,
+              name,
+              email,
+              phone,
+              saving
+            })
+        }}
       >
         {(props: FormikProps<FormValuesI>) => (
           <form onSubmit={props.handleSubmit} className="form">
