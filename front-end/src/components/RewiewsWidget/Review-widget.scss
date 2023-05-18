@@ -1,0 +1,7 @@
+@use '../../styles/colors';
+
+body {
+    background-color: colors.$lightGray !important;
+    padding: 20px 40px;
+    font-family: sans-serif;
+}

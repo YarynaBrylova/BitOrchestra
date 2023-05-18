@@ -1,0 +1,8 @@
+@use "../../../styles/colors";
+
+.btn-link {
+    padding: 0 !important;
+    color: colors.$dark-gray !important;
+    margin: 20px 0;
+    font-weight: 600 !important;
+}

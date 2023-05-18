@@ -1,0 +1,20 @@
+@use "../../../styles/colors";
+
+.review-wrapper {
+    padding: 30px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid colors.$slateGray;
+
+    .date {
+        color: colors.$slateGray;
+    }
+}
+
+.read-more {
+    display: flex;
+    flex-direction: column;
+    
+    button {
+        align-self: flex-start;
+    }
+}
